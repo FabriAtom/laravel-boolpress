@@ -14,26 +14,26 @@ class Post extends Model
         'category_id'
     ];
 
-    // public function category()
-    // {
-    //     return $this->belongsTo('App\Category');
-    // }
-    // static public function getUniqueSlugFrom($title)
-    // {
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+    static public function getUniqueSlugFrom($title)
+    {
 
-    //     $slug_base = Str::slug($title);
-    //     $slug = $slug_base;
-    //     $post_esistente = Post::where('slug', $slug)->first();
-    //     $counter = 1;
+        $slug_base = Str::slug($title);
+        $slug = $slug_base;
+        $post_esistente = Post::where('slug', $slug)->first();
+        $counter = 1;
 
-    //     while ($post_esistente) {
+        while ($post_esistente) {
 
-    //         $slug = $slug_base . '-' . $counter;
+            $slug = $slug_base . '-' . $counter;
 
-    //         $post_esistente = Post::where('slug', $slug)->first();
-    //         $counter++;
-    //     }
+            $post_esistente = Post::where('slug', $slug)->first();
+            $counter++;
+        }
 
-    //     return $slug;
-    // }
+        return $slug;
+    }
 }

@@ -72,7 +72,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::orderBy('name', 'asc')->get();
+        return view('admin.posts.edit', compact('categories', 'post'));
     }
 
     /**
@@ -84,7 +85,19 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $params = $request->validate([
+            'title' => 'required|max:255|min:5',
+            'content' => 'required',
+            'category_id' => 'nullable|exists:categories,id'
+        ]);
+
+        if ($params['title'] !== $post->title) {
+            $params['slug'] = Post::getUniqueSlugFrom($params['title']);
+        }
+
+        $post->update($params);
+
+        return redirect()->route('admin.posts.show', $post);
     }
 
     /**
@@ -95,6 +108,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('admin.posts.index');
     }
 }
