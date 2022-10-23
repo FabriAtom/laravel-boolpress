@@ -17,18 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Auth::routes();
 
-
-
-// Route::middleware('auth')->get('/admin/home', 'Admin\HomeController@index')->name('admin.home');
 
 Route::middleware('auth')
     ->prefix('admin')
     ->name('admin.')
     ->namespace('Admin')
-    ->group(function() {
-       Route::get('/home', 'HomeController@index')->name('admin.home');
-       Route::resource('posts', 'PostController');
+    ->group(function () {
+        Route::get('/home', 'HomeController@index')->name('admin.home');
+        Route::resource('posts', 'PostController');
 });
