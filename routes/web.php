@@ -27,4 +27,6 @@ Route::middleware('auth')
     ->group(function () {
         Route::get('/home', 'HomeController@index')->name('admin.home');
         Route::resource('posts', 'PostController');
+        Route::resource('tags', 'TagController')->only(['show']);
+
 });
