@@ -92,7 +92,7 @@ class PostController extends Controller
         ]);
 
         if ($params['title'] !== $post->title) {
-            $params['slug'] = Post::getUniqueSlugFrom($params['title']);
+            $params['slug'] = Post::getUniqueSlugFromTitle($params['title']);
         }
 
         $post->update($params);
