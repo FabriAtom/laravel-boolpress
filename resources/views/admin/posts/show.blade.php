@@ -5,6 +5,14 @@
         <div class="row">
             <div class="col-8">
                 <h1>{{ $post->title }}</h1>
+                
+                @if ($post->cover)
+                    <div class="col-12">
+                        {{ $post->cover }}
+                        <img src="{{ asset('storage/'.$post->cover) }}" width="400" alt="">
+                    </div>
+                @endif
+
                 <p>{{ $post->slug }}</p>
                 @if ($post->category)
                     <p>Categoria{{ $post->category->name }}</p>

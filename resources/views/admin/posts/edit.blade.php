@@ -7,7 +7,6 @@
                 <h1>Modifica il Post:{{ $post->title }}</h1>
             </div>
             <div class="col-4 text-left d-flex justify-content-end align-items-center">
-
             </div>
         </div>
     </div>
@@ -29,6 +28,20 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Imagine copertina articolo</label>
+
+                        <div class="custom-file">
+                            <input type="file" name="image" class="custom-file-input @error('image') is-invalid @endif" id="image" >
+                            <label class="custom-file-label" for="image">scegli immagine...</label>
+                            @error('image')
+                            <div id="image" class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">

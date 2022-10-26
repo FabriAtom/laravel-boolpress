@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -41,21 +42,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
         $params = $request->validate([
             'title' => 'required|max:255|min:5',
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'exists:tags,id',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
         ]);
         
 
         $params['slug'] = Post::getUniqueSlugFromTitle($params['title']);
 
-
+        // disk('images')->
         if(array_key_exists('image', $params)) {
-            $img_path = Storeage::put('uploads', $params['image']);
+            $img_path = Storage::put('uploads', $params['image']);
             $params['cover'] = $img_path;
         }
 
@@ -63,10 +63,11 @@ class PostController extends Controller
         $post = Post::create($params);
        
 
-    if(array_key_exists('tags', $params)){
-        $tags = $params['tags'];
-        $post->tags()->sync($tags);
-    }
+        if(array_key_exists('tags', $params)){
+            $tags = $params['tags'];
+            $post->tags()->sync($tags);
+        }
+
         return redirect()->route('admin.posts.show', $post);
     }
 
@@ -132,7 +133,15 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+        $cover = $post->cover;
+        
         $post->delete();
+
+        if($post->cover && Storage::exists($cover)) {
+            Storage::delete($cover);
+        }
+
         return redirect()->route('admin.posts.index');
     }
 }
