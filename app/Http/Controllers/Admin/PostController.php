@@ -9,6 +9,7 @@ use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SendPostCreatedMail;
 
 
 class PostController extends Controller
@@ -70,7 +71,7 @@ class PostController extends Controller
             $post->tags()->sync($tags);
         }
 
-        Mail::to('ciccio.pasticcio@gmail.com')->send(new SendPostCreatedMail());
+        Mail::to('ciccio.pasticcio@gmail.com')->send(new SendPostCreatedMail($post));
         
         return redirect()->route('admin.posts.show', $post);
     }
