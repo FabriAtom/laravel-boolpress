@@ -17,6 +17,7 @@
                 @if ($post->category)
                     <p>Categoria{{ $post->category->name }}</p>
                 @endif
+
                 <div>
                   <p>Tags</p>
                     <ul>
@@ -32,6 +33,7 @@
                     <li>updated at : {{ $post->updated_at }}</li>
                 </ul>
             </div>
+            
             <div class="col-4 text-left d-flex justify-content-end align-items-center">
                 <a href="{{ route('admin.posts.edit', $post) }}" type="button" class="btn btn-primary btn-sm">Modifica</a>
                 <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">

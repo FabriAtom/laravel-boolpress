@@ -1,5 +1,11 @@
-<label for="">titolo del nuovo post:</label>
-<h1>
-    <a href="{{ route('admin.posts.show',$post) }}"></a>
-   {{ $post->title }}
-</h1>
+@component('mail::message')
+# nuovo post
+ 
+Congratulazioni! un nuovo post è stato aggiunto al tuo blog! 
+@component('mail::button', ['url' => route('admin.posts.show',$post)])
+{{ $post->title }}
+@endcomponent
+ 
+grazie,<br>
+{{ config('app.name') }}
+@endcomponent
