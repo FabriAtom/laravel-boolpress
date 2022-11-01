@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+ 
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+route::resource('posts','Api\PostController')->only(['index','show']);
+// /api/post -> Api/PostController@index
+//  /api/posts/{post} -> Api/PostController@show
