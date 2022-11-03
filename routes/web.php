@@ -25,13 +25,15 @@ Route::middleware('auth')
     ->name('admin.')
     ->namespace('Admin')
     ->group(function () {
-        Route::get('/home', 'HomeController@index')->name('admin.home');
+        Route::get('/home', 'HomeController@index')->name('home');
 
         Route::resource('posts', 'PostController');
 
         Route::resource('tags', 'TagController')->only(['show']);
 });
 
+// route del frontend che torno la view guest
+// qualsiasi rotta ci rimanda alla guest.home
 route::get('{any?}', function(){
     return view('guest.home');
 })->where('any','.*');

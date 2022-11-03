@@ -1,5 +1,6 @@
 <template>
     
+    <!-- markup della card dei post -->
     <article class="relative rounded-lg overflow-hidden">
 
         <img v-if="post.cover" :src="post.cover.path" alt="">
