@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Mail\SendPostCreatedMail;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SendPostCreatedMail;
+use Illuminate\Support\Facades\Storage;
 
 
 class PostController extends Controller
@@ -49,16 +49,15 @@ class PostController extends Controller
             'title' => 'required|max:255|min:5',
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'exists:tags,id',
-            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
+            'tags.*' => 'exists:tags,id',
+            'image' => 'nullable|image|max:2048'
         ]);
         
 
-        $params['slug'] = Post::getUniqueSlugFromTitle($params['title']);
+        $params['slug'] = Post::getUniqueSlugFrom($params['title']);
 
-        // disk('images')->
         if(array_key_exists('image', $params)) {
-            $img_path = Storage::put('uploads', $params['image']);
+            $img_path = Storage::disk('images')->put('post_covers', $params['image']);
             $params['cover'] = $img_path;
         }
 
@@ -117,7 +116,7 @@ class PostController extends Controller
         ]);
 
         if ($params['title'] !== $post->title) {
-            $params['slug'] = Post::getUniqueSlugFromTitle($params['title']);
+            $params['slug'] = Post::getUniqueSlugFrom($params['title']);
         }
 
         $post->update($params);
@@ -143,8 +142,8 @@ class PostController extends Controller
         
         $post->delete();
 
-        if($post->cover && Storage::exists($cover)) {
-            Storage::delete($cover);
+        if($post->cover && Storage::disk('images')->exists($cover)) {
+            Storage::disk('images')->delete($cover);
         }
 
         return redirect()->route('admin.posts.index');

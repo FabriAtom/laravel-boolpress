@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-route::resource('posts','Api\PostController')->only(['index','show']);
+route::resource('posts','Api\PostController')->only(['index','show'])->parameters([
+    'posts' => 'slug'
+]);
 // /api/post -> Api/PostController@index
 //  /api/posts/{post} -> Api/PostController@show

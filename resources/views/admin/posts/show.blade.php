@@ -9,7 +9,8 @@
                 @if ($post->cover)
                     <div class="col-12">
                         {{-- {{ $post->cover }} --}}
-                        <img src="{{ $post->cover_path }}" width="400" alt="">
+                        {{-- {{ $post->cover_path }} --}}
+                        <img src="{{ asset('images/' . $post->cover) }}" width="400" alt="">
                     </div>
                 @endif
 

@@ -9,7 +9,8 @@
         <section class="my-12">
             <div class="container">
                 <div class="grid grid-cols-3 gp-8">
-                    <router-link :to="{ name: 'posts.show', params: { slug: post.slug } }" v-for="post in posts" :key="post.id">
+                    <router-link :to="{ name: 'posts.show', params:{ slug:post.slug }}" v-for="post in posts"
+                        :key="post.id">
                         <PostCard :post="post"/>
                     </router-link>
                 </div>
@@ -67,7 +68,7 @@ export default {
                     page: page
                 }
             }).then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 const { data, current_page, last_page, total } = res.data.result
                 this.posts = data
                 this.lastPage = last_page

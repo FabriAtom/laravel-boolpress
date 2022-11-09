@@ -2,7 +2,8 @@ import Home from "../pages/Home.vue";
 import ContactUs from "../pages/ContactUs.vue";
 import AboutAs from "../pages/AboutUs.vue";
 import PostsIndex from "../pages/Posts.index.vue";
-import PostShow from "../pages/Posts.show.vue"
+import PostsShow from "../pages/Posts.show.vue";
+import Page404 from "../pages/404.vue";
 
 const routes = [
     {
@@ -26,12 +27,15 @@ const routes = [
         component: PostsIndex,
     },
     {
-
-        path: '/blog/:slug',
+        path: "/blog/:slug",
         name: "posts.show",
-        component: PostShow,
+        component: PostsShow,
         props: true,
-
+    },
+    {
+        path: "/*",
+        name: "404",
+        component: Page404,
     },
 ];
 
